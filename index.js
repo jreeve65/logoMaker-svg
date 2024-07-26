@@ -1,6 +1,7 @@
 const fs = require('fs');
 const inqur = require('inquirer');
 const Circle = require('./lib/circle.js');
+const { error } = require('console');
 // const sv = require('./lib/svg');
 
 inqur
@@ -29,9 +30,11 @@ inqur
 }
 ])
 .then( (answers)=>{
-    if(answers.shape ==='circle'){
-        circ = new Circle(answers.shape,answers.shapeColor,answers.text,answers.txtColor);
+    if(answers.shape ==='circle'&& answers.text.length<=3){
+        circ = new Circle(answers.shape,answers.shapeColor.toLowerCase(),answers.text.toUpperCase(),answers.txtColor.toLowerCase());
         return circ;
+    } else{
+        throw new Error('Invalid input please make sure your input does not exceed 3 characters');
     }
 
 }
@@ -39,8 +42,5 @@ inqur
 ).then((shp)=>  {
     const shapeToRender = shp.renderCircle();
     fs.writeFile('./examples/logo.svg',shapeToRender,(err)=> err? console.log('oops something went wrong'):console.log('Generated logo.svg'))
-});
-//===============================================================example file path for examples============================================================================
-// .then((answers)=>
-//     fs.writeFile('./examples/answers.txt',`${answers.shape}\n${answers.text} \n${answers.shapeColor}\n${answers.txtColor}`,(err)=> err? console.log('oops something went wrong'):console.log('success!'))
-// );
+})
+.catch((err) => (console.log(err)));
