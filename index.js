@@ -1,6 +1,6 @@
 const fs = require('fs');
 const inqur = require('inquirer');
-// const sh = require('./lib/shapes');
+const sh = require('./lib/shape');
 // const sv = require('./lib/svg');
 
 inqur
