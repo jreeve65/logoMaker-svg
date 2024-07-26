@@ -61,4 +61,4 @@ inqur
     
     fs.writeFile('./examples/logo.svg',shp,(err)=> err? console.log('oops something went wrong'):console.log('Generated logo.svg'))
 })
-.catch((err) => (console.log(err)));
+
