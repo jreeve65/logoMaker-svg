@@ -1,6 +1,6 @@
 const fs = require('fs');
 const inqur = require('inquirer');
-const Circle = require('./lib/circle.js');
+const {Shape,Circle,Triangle} = require('./lib/shape.js');
 
 
 
@@ -30,17 +30,24 @@ inqur
 }
 ])
 .then( (answers)=>{
-    if(answers.shape ==='circle'&& answers.text.length<=3){
-        circ = new Circle(answers.shape,answers.shapeColor.toLowerCase(),answers.text.toUpperCase(),answers.txtColor.toLowerCase());
-        return circ;
-    } else{
+    if(answers.text.length>3){
         throw new Error('Invalid input please make sure your input does not exceed 3 characters');
     }
-
+    else if(answers.shape ==='circle'){
+        const circ = new Circle(answers.shape,answers.shapeColor.toLowerCase(),answers.text.toUpperCase(),answers.txtColor.toLowerCase());
+        const shapeToRender = circ.renderCircle();
+        return shapeToRender;
+    } 
+    else{
+        const tri = new Triangle(answers.shape,answers.shapeColor.toLowerCase(),answers.text.toUpperCase(),answers.txtColor.toLowerCase());
+        const shapeToRender= tri.renderTriangle();
+        return shapeToRender;
+    }
+    
 }
 
 ).then((shp)=>  {
-    const shapeToRender = shp.renderCircle();
-    fs.writeFile('./examples/logo.svg',shapeToRender,(err)=> err? console.log('oops something went wrong'):console.log('Generated logo.svg'))
+    
+    fs.writeFile('./examples/logo.svg',shp,(err)=> err? console.log('oops something went wrong'):console.log('Generated logo.svg'))
 })
 .catch((err) => (console.log(err)));
