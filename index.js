@@ -1,6 +1,6 @@
 const fs = require('fs');
 const inqur = require('inquirer');
-const sh = require('./lib/shape');
+const Circle = require('./lib/circle.js');
 // const sv = require('./lib/svg');
 
 inqur
@@ -29,11 +29,17 @@ inqur
 }
 ])
 .then( (answers)=>{
-console.log(answers);
-return answers;
+    if(answers.shape ==='circle'){
+        circ = new Circle(answers.shape,answers.shapeColor,answers.text,answers.txtColor);
+        return circ;
+    }
+
 }
 
-);
+).then((shp)=>  {
+    const shapeToRender = shp.renderCircle();
+    fs.writeFile('./examples/logo.svg',shapeToRender,(err)=> err? console.log('oops something went wrong'):console.log('Generated logo.svg'))
+});
 //===============================================================example file path for examples============================================================================
 // .then((answers)=>
 //     fs.writeFile('./examples/answers.txt',`${answers.shape}\n${answers.text} \n${answers.shapeColor}\n${answers.txtColor}`,(err)=> err? console.log('oops something went wrong'):console.log('success!'))
