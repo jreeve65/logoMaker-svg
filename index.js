@@ -1,8 +1,8 @@
 const fs = require('fs');
 const inqur = require('inquirer');
 const Circle = require('./lib/circle.js');
-const { error } = require('console');
-// const sv = require('./lib/svg');
+
+
 
 inqur
 .prompt([
